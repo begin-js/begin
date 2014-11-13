@@ -35,10 +35,11 @@ define('begin:begin', function (require, exports, module) {
 
         /**
          * 对象是节点
+         * IE8下没有Node这个全局interface
          */
-        if (object instanceof Node) {
-            // 
-        }
+        // if (object instanceof Node) {
+        //     // 
+        // }
 
         /**
          * 对象是数组
