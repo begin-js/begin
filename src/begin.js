@@ -29,7 +29,7 @@ define('begin:begin', function (require, exports, module) {
         /**
          * 对象是DIV元素
          */
-        if (toString.call(div) === '[object HTMLDivElement]') {
+        if (toString.call(object) === '[object HTMLDivElement]') {
             return new begin.Element(object);
         }
 
