@@ -21,7 +21,7 @@ define('begin:begin', function (require, exports, module) {
         var toString = Object.prototype.toString;
 
         for (var i = 0, supportedInterface; supportedInterface = supportedInterfaces[i]; i++) {
-            if (object instanceof supportedInterface) {
+            if (object instanceof window[supportedInterface]) {
                 if (typeof begin[supportedInterface] === 'undefined') {
                     // 不存在对应的接口，直接返回对象
                     return object;
@@ -31,5 +31,7 @@ define('begin:begin', function (require, exports, module) {
                 }
             }
         }
+
+        return object;
     }
 });
