@@ -2,6 +2,14 @@ define('begin:begin', function (require, exports, module) {
     // 导出
     module.exports = begin;
 
+    // beginjs支持的接口
+    var supportedInterfaces = [
+        'Array', 'String', 'Number',
+        'HTMLDivElement', 'HTMLElement', 'Element', 'Node',
+        'EventTarget',
+        'Object'
+    ]
+
     /**
      * begin JS
      * 填充浏览器间的不同
@@ -12,47 +20,16 @@ define('begin:begin', function (require, exports, module) {
         var env = window || global;
         var toString = Object.prototype.toString;
 
-        /**
-         * 对象是元素
-         */
-        if (object instanceof Element) {
-            return new begin.Element(object);
-        }
-
-        /**
-         * 对象是DIV元素
-         */
-        if (object instanceof HTMLDivElement) {
-            return new begin.Element(object);
-        }
-
-        /**
-         * 对象是DIV元素
-         */
-        if (toString.call(object) === '[object HTMLDivElement]') {
-            return new begin.Element(object);
-        }
-
-        /**
-         * 对象是节点
-         * IE8下没有Node这个全局interface
-         */
-        // if (object instanceof Node) {
-        //     // 
-        // }
-
-        /**
-         * 对象是数组
-         */
-        if (object instanceof Array) {
-            return new begin.Array(object);
-        }
-
-        /**
-         * 对象是数字
-         */
-        if (toString.call(object) === '[object Number]') {
-            return new begin.Number(object);
+        for (var i = 0, supportedInterface; supportedInterface = supportedInterfaces[i]; i++) {
+            if (object instanceof supportedInterface) {
+                if (typeof begin[supportedInterface] === 'undefined') {
+                    // 不存在对应的接口，直接返回对象
+                    return object;
+                } else {
+                    // begin上附有对应的接口，返回一个接口实例
+                    return new begin[supportedInterface](object);
+                }
+            }
         }
     }
 });
